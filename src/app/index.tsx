@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ItemRow } from '@/components/item-row';
@@ -12,7 +12,12 @@ export default function ItemsScreen() {
   return (
     <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: theme.background }]}>
       <Text style={[styles.title, { color: theme.text }]}>All items</Text>
-      <ItemRow item={itemData[0]} onPress={() => Alert.alert(itemData[0].name)} />
+      <FlatList
+        data={itemData}
+        keyExtractor={(item) => String(item.id)}
+        contentContainerStyle={{ gap: Spacing.two, paddingBottom: Spacing.three }}
+        renderItem={({ item }) => <ItemRow item={item} onPress={() => Alert.alert(item.name)} />}
+      />
     </SafeAreaView>
   );
 }
